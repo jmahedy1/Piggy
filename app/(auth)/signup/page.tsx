@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { DollarSign, Eye, EyeOff } from 'lucide-react';
+import { PiggyBank, Eye, EyeOff } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 
@@ -68,7 +68,7 @@ export default function SignupPage() {
     <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
       <div className="text-center mb-8">
         <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <DollarSign size={32} className="text-indigo-600" />
+          <PiggyBank size={32} className="text-indigo-600" />
         </div>
         <h1 className="text-2xl font-bold text-gray-900">Create Account</h1>
         <p className="text-gray-500 mt-2">Start tracking your finances today</p>

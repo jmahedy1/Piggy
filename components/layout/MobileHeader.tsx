@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { DollarSign, Menu, X } from 'lucide-react';
+import { PiggyBank, Menu, X } from 'lucide-react';
 import { MobileNav } from './MobileNav';
 
 export function MobileHeader() {
@@ -12,7 +12,7 @@ export function MobileHeader() {
       <header className="lg:hidden bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-            <DollarSign size={18} className="text-white" />
+            <PiggyBank size={18} className="text-white" />
           </div>
           <span className="text-lg font-bold text-gray-900">Piggy</span>
         </div>

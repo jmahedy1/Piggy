@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { DollarSign, Home, List, PieChart, Settings, LogOut } from 'lucide-react';
+import { PiggyBank, Home, List, PieChart, Settings, LogOut } from 'lucide-react';
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -27,7 +27,7 @@ export function Sidebar() {
     <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-gray-200 min-h-screen p-6">
       <div className="flex items-center gap-3 mb-10">
         <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center">
-          <DollarSign size={24} className="text-white" />
+          <PiggyBank size={24} className="text-white" />
         </div>
         <span className="text-xl font-bold text-gray-900">Piggy</span>
       </div>
