@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String        @id @default(uuid())
+  email             String        @unique
+  passwordHash      String        @map("password_hash")
+  firstName         String        @default("") @map("first_name")
+  lastName          String        @default("") @map("last_name")
+  resetToken        String?       @map("reset_token")
+  resetTokenExpiry  DateTime?     @map("reset_token_expiry")
+  createdAt         DateTime      @default(now()) @map("created_at")
+  updatedAt         DateTime?     @updatedAt @map("updated_at")
+
+  categories   Category[]
+  transactions Transaction[]
+
+  @@map("users")
+}
+
+enum TransactionType {
+  income
+  expense
+}
+
+model Category {
+  id        String          @id @default(uuid())
+  userId    String          @map("user_id")
+  name      String
+  type      TransactionType
+  icon      String?
+  color     String?
+  createdAt DateTime        @default(now()) @map("created_at")
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@map("categories")
+}
+
+model Transaction {
+  id          String          @id @default(uuid())
+  userId      String          @map("user_id")
+  categoryId  String?         @map("category_id")
+  type        TransactionType
+  amount      Decimal         @db.Decimal(12, 2)
+  description String
+  date        DateTime        @db.Date
+  createdAt   DateTime        @default(now()) @map("created_at")
+  updatedAt   DateTime?       @updatedAt @map("updated_at")
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@map("transactions")
+}
