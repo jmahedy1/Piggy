@@ -190,6 +190,64 @@ View and edit your database with Prisma Studio:
 npx prisma studio
 ```
 
+### Git Workflow
+
+This project uses a structured Git workflow with feature branches.
+
+#### Branch Structure
+
+- **`main`** - Production-ready code (deployed to Vercel)
+- **`dev`** - Development integration branch
+- **`feature/*`** - Feature branches (e.g., `feature/budget-tracking`)
+- **`bugfix/*`** - Bug fix branches (e.g., `bugfix/login-validation`)
+- **`hotfix/*`** - Urgent production fixes (e.g., `hotfix/security-patch`)
+
+#### Creating a New Feature
+
+```bash
+# Switch to dev and pull latest changes
+git checkout dev
+git pull
+
+# Create a new feature branch
+git checkout -b feature/your-feature-name
+
+# Make your changes and commit
+git add .
+git commit -m "Your descriptive commit message"
+
+# Push your feature branch
+git push -u origin feature/your-feature-name
+```
+
+#### Merging Features to Dev
+
+```bash
+# After feature is complete and tested
+git checkout dev
+git pull
+git merge feature/your-feature-name
+git push
+```
+
+#### Deploying to Production
+
+```bash
+# When dev is stable and ready for production
+git checkout main
+git pull
+git merge dev
+git push
+```
+
+#### Best Practices
+
+- Keep commits focused and descriptive
+- Test your changes before merging
+- Pull latest changes before creating a new branch
+- Delete feature branches after merging
+- Never commit sensitive data (.env files are gitignored)
+
 ## Deployment
 
 ### Deploy to Vercel
