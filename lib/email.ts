@@ -7,9 +7,9 @@ export async function sendPasswordResetEmail(email: string, resetToken: string) 
 
   try {
     await resend.emails.send({
-      from: 'FinTrack <onboarding@resend.dev>', // Change this when you verify your domain
+      from: 'Piggy <onboarding@resend.dev>', // Change this when you verify your domain
       to: email,
-      subject: 'Reset Your FinTrack Password',
+      subject: 'Reset Your Piggy Password',
       html: `
         <!DOCTYPE html>
         <html>
@@ -20,14 +20,14 @@ export async function sendPasswordResetEmail(email: string, resetToken: string) 
           </head>
           <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
             <div style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-              <h1 style="color: white; margin: 0; font-size: 28px;">FinTrack</h1>
+              <h1 style="color: white; margin: 0; font-size: 28px;">Piggy</h1>
             </div>
 
             <div style="background: #ffffff; padding: 40px; border: 1px solid #e2e8f0; border-top: none; border-radius: 0 0 10px 10px;">
               <h2 style="color: #1e293b; margin-top: 0;">Reset Your Password</h2>
 
               <p style="color: #64748b; font-size: 16px;">
-                You recently requested to reset your password for your FinTrack account. Click the button below to reset it.
+                You recently requested to reset your password for your Piggy account. Click the button below to reset it.
               </p>
 
               <div style="text-align: center; margin: 35px 0;">
@@ -55,7 +55,7 @@ export async function sendPasswordResetEmail(email: string, resetToken: string) 
             </div>
 
             <div style="text-align: center; margin-top: 20px; color: #94a3b8; font-size: 12px;">
-              <p>&copy; ${new Date().getFullYear()} FinTrack. All rights reserved.</p>
+              <p>&copy; ${new Date().getFullYear()} Piggy. All rights reserved.</p>
             </div>
           </body>
         </html>

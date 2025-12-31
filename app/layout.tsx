@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "FinTrack - Personal Financial Tracker",
+  title: "Piggy - Personal Financial Tracker",
   description: "Track your income and expenses with ease",
 };
 

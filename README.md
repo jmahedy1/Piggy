@@ -1,4 +1,4 @@
-# FinTrack - Personal Financial Tracker
+# Piggy - Personal Financial Tracker
 
 A modern, full-stack financial tracking application built with Next.js 15, TypeScript, Prisma, and PostgreSQL.
 

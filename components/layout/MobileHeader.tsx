@@ -14,7 +14,7 @@ export function MobileHeader() {
           <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
             <DollarSign size={18} className="text-white" />
           </div>
-          <span className="text-lg font-bold text-gray-900">FinTrack</span>
+          <span className="text-lg font-bold text-gray-900">Piggy</span>
         </div>
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
