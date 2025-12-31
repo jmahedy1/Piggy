@@ -79,6 +79,15 @@ export async function PUT(
           { status: 400 }
         );
       }
+
+      const MAX_AMOUNT = 9999999999.99;
+      if (amountNum > MAX_AMOUNT) {
+        return NextResponse.json(
+          { error: `Amount cannot exceed ${MAX_AMOUNT.toLocaleString()}` },
+          { status: 400 }
+        );
+      }
+
       updateData.amount = amountNum;
     }
 
@@ -93,6 +102,12 @@ export async function PUT(
     }
 
     if (description !== undefined) {
+      if (description.length > 255) {
+        return NextResponse.json(
+          { error: 'Description cannot exceed 255 characters' },
+          { status: 400 }
+        );
+      }
       updateData.description = description;
     }
 
@@ -102,12 +117,29 @@ export async function PUT(
 
     if (date !== undefined) {
       const transactionDate = new Date(date);
+      if (isNaN(transactionDate.getTime())) {
+        return NextResponse.json(
+          { error: 'Invalid date format' },
+          { status: 400 }
+        );
+      }
+
       if (transactionDate > new Date()) {
         return NextResponse.json(
           { error: 'Date cannot be in the future' },
           { status: 400 }
         );
       }
+
+      const minDate = new Date();
+      minDate.setFullYear(minDate.getFullYear() - 100);
+      if (transactionDate < minDate) {
+        return NextResponse.json(
+          { error: 'Date cannot be more than 100 years in the past' },
+          { status: 400 }
+        );
+      }
+
       updateData.date = transactionDate;
     }
 

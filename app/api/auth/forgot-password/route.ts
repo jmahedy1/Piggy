@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { sendPasswordResetEmail } from '@/lib/email';
+import { forgotPasswordRateLimit } from '@/lib/rate-limit';
 import crypto from 'crypto';
 
 export async function POST(request: NextRequest) {
+  // Apply rate limiting
+  const rateLimitResponse = await forgotPasswordRateLimit(request);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     const body = await request.json();
     const { email } = body;
@@ -30,20 +37,27 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Generate a secure random token
+    // Generate a secure random token (this will be sent in email)
     const resetToken = crypto.randomBytes(32).toString('hex');
+
+    // Hash the token before storing (security: even if DB is compromised, tokens are protected)
+    const resetTokenHash = crypto
+      .createHash('sha256')
+      .update(resetToken)
+      .digest('hex');
+
     const resetTokenExpiry = new Date(Date.now() + 3600000); // 1 hour from now
 
-    // Save token to database
+    // Save HASHED token to database
     await prisma.user.update({
       where: { id: user.id },
       data: {
-        resetToken,
+        resetToken: resetTokenHash,
         resetTokenExpiry,
       },
     });
 
-    // Send reset email
+    // Send reset email with PLAIN token
     await sendPasswordResetEmail(user.email, resetToken);
 
     return NextResponse.json({

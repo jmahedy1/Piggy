@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { hashPassword } from '@/lib/auth';
+import crypto from 'crypto';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,10 +22,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Find user with this token
+    // Hash the token from the URL to compare with database
+    const resetTokenHash = crypto
+      .createHash('sha256')
+      .update(token)
+      .digest('hex');
+
+    // Find user with this hashed token
     const user = await prisma.user.findFirst({
       where: {
-        resetToken: token,
+        resetToken: resetTokenHash,
         resetTokenExpiry: {
           gt: new Date(), // Token must not be expired
         },

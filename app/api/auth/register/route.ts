@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { hashPassword, generateToken, setAuthCookie } from '@/lib/auth';
+import { registerRateLimit } from '@/lib/rate-limit';
 
 const DEFAULT_CATEGORIES = {
   income: [
@@ -21,6 +22,12 @@ const DEFAULT_CATEGORIES = {
 };
 
 export async function POST(request: NextRequest) {
+  // Apply rate limiting
+  const rateLimitResponse = await registerRateLimit(request);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   try {
     const body = await request.json();
     const { email, password, firstName, lastName } = body;
