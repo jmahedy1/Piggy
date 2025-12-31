@@ -43,6 +43,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check if user has 2FA enabled
+    if (user.twoFactorEnabled) {
+      // Don't set auth cookie yet - user needs to verify 2FA code first
+      return NextResponse.json({
+        requiresTwoFactor: true,
+        userId: user.id, // Frontend needs this to submit 2FA code
+        message: 'Please enter your 2FA verification code',
+      });
+    }
+
+    // No 2FA - complete login normally
     const token = generateToken(user.id);
     await setAuthCookie(token);
 
